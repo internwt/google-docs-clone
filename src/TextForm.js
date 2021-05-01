@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback, useState } from 'react'
+import { useEffect, useCallback, useState } from 'react'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import io from 'socket.io-client'
@@ -18,8 +18,14 @@ const TOOLBAR_OPTIONS = [
 function TextForm() {
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
+
     useEffect(() => {
-        const s = io("http://localhost:3001")
+        const s = io("http://localhost:3001", {
+            query: {
+                "my-key": "my-value"
+            }
+        })
+        console.log(`ssssssssssss`, s)
         setSocket(s)
         return () => {
             s.disconnect()
@@ -29,7 +35,7 @@ function TextForm() {
     useEffect(() => {
         if (socket == null || quill == null) return
         const handler = (delta, oldDelta, source) => {
-            if (source != "users") return
+            if (source !== "users") return
             socket.emit("send-changes", delta)
         }
         quill.on('text-change', handler)
