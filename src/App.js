@@ -2,8 +2,8 @@ import { Route, Redirect, Switch, useLocation } from 'react-router-dom';
 import TextForm from './TextForm'
 import Todo from './Components/Todo'
 import CurrencyConvertor from './Components/CurrencyConvertor/Currency'
-
-
+import Navbar from './Navbar'
+import Breakinbad from './Components/BreakingBad/Breakinbad'
 const pages = [
   {
     pageLink: '/socket',
@@ -22,11 +22,18 @@ const pages = [
     view: CurrencyConvertor,
     displayName: "currency",
     showInNavbar: true
+  },
+  {
+    pageLink: '/breaking-bad',
+    view: Breakinbad,
+    displayName: "Breakinbad",
+    showInNavbar: true
   }
 ]
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Switch >
         {pages.map((page, index) => {
           return (
